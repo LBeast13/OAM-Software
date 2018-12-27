@@ -17,7 +17,7 @@ public class OamConnection {
 	/**
 	 * The URL for the database connection
 	 */
-	private String url = "jdbc:postgresql://localhost:5432/DataBaseName";
+	private String url = "jdbc:postgresql://localhost:5432/Test";
 	
 	/**
 	 * Username to access the database.

@@ -5,9 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.time.LocalDate;
 
+import dao.factory.AbstractDAOFactory;
+import dao.model.DAO;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Member;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
@@ -21,50 +25,35 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+
 			
-			try {
-			      Class.forName("org.postgresql.Driver");
-			      System.out.println("Driver O.K.");
+			AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DB_DAO_FACTORY);
+			//On récupère un objet faisant le lien entre la base et nos objets 
+			DAO<Member> eleveDao = adf.getMemberDAO();
+			
+			LocalDate date = LocalDate.of(1963, 1, 19);
+			
+			Member memb = new Member(3, 1, "Brigitte", "BETTE", date, "bibi@hotmail.com", "1 Avenida Paraiso", 0, "Arroyo de la miel", "Espagne", "645123785", "X45FA478", 1.63, 0, false, false, "musculation", null, null);
+			
+			//boolean test = eleveDao.create(memb);
+			eleveDao.update(memb);
+			//boolean test = eleveDao.delete(memb);
+			
+			//System.out.println(test);
+			
+			for(int i = 1; i < 3; i++){
+				//On fait notre recherche
+				Member m = eleveDao.find(i);
+				System.out.println("\tELEVE N°" + m.getId().get() + " - NOM : " + m.getFamName().get() + " - PRENOM : " + m.getFirstName().get() + " - Naissance : " + m.getBorn().get());
+			}    
+			
+			
 
-			      String url = "jdbc:postgresql://localhost:5432/Test";
-			      String user = "postgres";
-			      String passwd = "";
-
-			      Connection conn = DriverManager.getConnection(url, user, passwd);
-			      System.out.println("Connexion effective !");         
-			      
-			      //Création d'un objet Statement
-			      Statement state = conn.createStatement();
-			      //L'objet ResultSet contient le résultat de la requête SQL
-			      ResultSet result = state.executeQuery("ALTER TABLE test_table ADD test_ajout INTEGER");
-			      //On récupère les MetaData
-			      ResultSetMetaData resultMeta = result.getMetaData();
-			         
-			      System.out.println("\n**********************************");
-			      //On affiche le nom des colonnes
-			      for(int i = 1; i <= resultMeta.getColumnCount(); i++)
-			        System.out.print("\t" + resultMeta.getColumnName(i).toUpperCase() + "\t *");
-			         
-			      System.out.println("\n**********************************");
-			         
-			      while(result.next()){         
-			        for(int i = 1; i <= resultMeta.getColumnCount(); i++)
-			          System.out.print("\t" + result.getObject(i).toString() + "\t |");
-			            
-			        System.out.println("\n---------------------------------");
-
-			      }
-
-			      result.close();
-			      state.close();
-			      } catch (Exception e) {
-			      e.printStackTrace();
-			    }      
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

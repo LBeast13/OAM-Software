@@ -45,9 +45,24 @@ public class Member {
 	private ObjectProperty<String> mEmail = new SimpleObjectProperty<>();
 	
 	/**
-	 * The address of the Member.
+	 * The address (Street, number, apartment...) of the Member.
 	 */
 	private ObjectProperty<String> mAddress = new SimpleObjectProperty<>();
+	
+	/**
+	 * The ZIP code of the address of the Member.
+	 */
+	private IntegerProperty mZipCode = new SimpleIntegerProperty();
+	
+	/**
+	 * The city of the address of the Member.
+	 */
+	private ObjectProperty<String> mCity = new SimpleObjectProperty<>();
+	
+	/**
+	 * The country of the address of the Member.
+	 */
+	private ObjectProperty<String> mCountry = new SimpleObjectProperty<>();
 	
 	/**
 	 * The phone number of the Member.
@@ -103,9 +118,20 @@ public class Member {
 	 */
 	private ObjectProperty<ArrayList<Result>> mResults = new SimpleObjectProperty<>();
 	
+	/**
+	 * The path to the picture of the Member.
+	 */
+	private ObjectProperty<String> mPicturePath = new SimpleObjectProperty<>();
+	
+	/**
+	 * The path to the scan of the Member's Dni.
+	 */
+	private ObjectProperty<String> mDniScanPath = new SimpleObjectProperty<>();
+	
 	public Member(int id, int idFam, String firstN, String famN, LocalDate born, 
-			String email, String add, String phone, String dni, double height, 
-			double weight, boolean league, boolean techGroup, String training) {
+			String email, String add, int zip, String city, String country,
+			String phone, String dni, double height, double weight, boolean league, 
+			boolean techGroup, String training, String picturePath, String dniPath) {
 		
 		this.mId.set(id);
 		this.mIdFam.set(idFam);
@@ -114,6 +140,9 @@ public class Member {
 		this.mBorn.set(born);
 		this.mEmail.set(email);
 		this.mAddress.set(add);
+		this.mZipCode.set(zip);
+		this.mCity.set(city);
+		this.mCountry.set(country);
 		this.mPhone.set(phone);
 		this.mDni.set(dni);
 		this.mHeight.set(height);
@@ -124,6 +153,8 @@ public class Member {
 		this.mBelts.set(new ArrayList<Belt>());
 		this.mLicences.set(new ArrayList<Licence>());
 		this.mResults.set(new ArrayList<Result>());
+		this.mPicturePath.set(picturePath);
+		this.mDniScanPath.set(dniPath);
 	}
 	
 	/**
@@ -132,6 +163,14 @@ public class Member {
 	public Member(){};
 
 	
+	/**
+	 * Check if the Member has a valid Licence or not.
+	 * @return if the member has an active licence.
+	 */
+	public boolean isActive(){
+		//TODO: Implement the isActive() method
+		return true;
+	}
 	
 	
 // Getters and Setter --------------------------------------------
@@ -157,6 +196,15 @@ public class Member {
 	public ObjectProperty<String> getAddress() {return mAddress;}
 	public void setAddress(ObjectProperty<String> ad) {this.mAddress = ad;}
 	
+	public IntegerProperty getZipCode() {return mZipCode;}
+	public void setZipCode(IntegerProperty zip) {this.mZipCode = zip;}
+	
+	public ObjectProperty<String> getCity() {return mCity;}
+	public void setCity(ObjectProperty<String> city) {this.mCity = city;}
+	
+	public ObjectProperty<String> getCountry() {return mCountry;}
+	public void setCountry(ObjectProperty<String> country) {this.mCountry = country;}
+	
 	public ObjectProperty<String> getPhone() {return mPhone;}
 	public void setPhone(ObjectProperty<String> phone) {this.mAddress = phone;}
 	
@@ -177,5 +225,11 @@ public class Member {
 	
 	public ObjectProperty<String> getTraining() {return mTraining;}
 	public void setTraining(ObjectProperty<String> train) {this.mTraining = train;}
+	
+	public ObjectProperty<String> getPicturePath() {return mPicturePath;}
+	public void setPicturePath(ObjectProperty<String> path) {this.mPicturePath = path;}
+	
+	public ObjectProperty<String> getDniScanPath() {return mDniScanPath;}
+	public void setDniScanPath(ObjectProperty<String> path) {this.mDniScanPath = path;}
 
 }
