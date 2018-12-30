@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import model.Member;
+import view.HomePageMapping;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -75,6 +76,12 @@ public class Main extends Application {
 			
 			// We set it to the center of the main container
 			mainContainer.setCenter(conteneurPersonne);
+			
+			// Gets the controller
+			HomePageMapping controller = loader.getController();
+			
+			controller.setMainApp(this);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
