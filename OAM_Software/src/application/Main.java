@@ -15,12 +15,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import model.Member;
 import view.HomePageMapping;
+import view.LoginMapping;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	
+	public static final int LOG_IN_ID = 0;
+	public static final int HOME_PAGE_ID = 1;
 	
 	private Stage mainStage;
 	private BorderPane mainContainer;
@@ -32,7 +36,7 @@ public class Main extends Application {
 		mainStage.setMaximized(true);
 		
 		initializeMainContainer();
-		initializeHomePage();
+		initializeLogin();
 	}
 	
 	/**
@@ -63,6 +67,30 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Initializes the login view
+	 */
+	private void initializeLogin() {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("..\\view\\LoginView.fxml"));
+		try {
+			// Container loading
+			BorderPane loginContainer = (BorderPane) loader.load();
+			
+			// We set it to the center of the main container
+			mainContainer.setCenter(loginContainer);
+			
+			// Gets the controller
+			LoginMapping controller = loader.getController();
+			
+			controller.setMainApp(this);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * Initializes and displays the Home Page
@@ -72,10 +100,10 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("..\\view\\HomePageView.fxml"));
 		try {
 			// Container loading
-			BorderPane conteneurPersonne = (BorderPane) loader.load();
+			BorderPane homePageContainer = (BorderPane) loader.load();
 			
 			// We set it to the center of the main container
-			mainContainer.setCenter(conteneurPersonne);
+			mainContainer.setCenter(homePageContainer);
 			
 			// Gets the controller
 			HomePageMapping controller = loader.getController();
@@ -86,6 +114,22 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * Set the content corresponding to the id.
+	 * Used by the controllers.
+	 * @param id : the id of the content to display
+	 */
+	public void setContent(int id){
+		switch(id){
+			case LOG_IN_ID:
+				initializeLogin();
+				break;
+			case HOME_PAGE_ID:
+				initializeHomePage();
+				break;
+		}
 	}
 
 	public static void main(String[] args) {
